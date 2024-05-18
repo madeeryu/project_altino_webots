@@ -46,7 +46,6 @@ setpoint  = 0
 speed = 0
 maxSpeed = 1.8
 minSpeed = 0
-# normal_speed = 0
 normal_speed = 1
 
 # defaults for this controller
@@ -202,9 +201,6 @@ while driver.step() != -1:
     if waktuSimulasi >= 15:
         break
     print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
-    # print("signal : ", signal)
-    # print("RPM : ", rpm)
-    # print("Sudut : ", roll)
 
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
@@ -218,8 +214,8 @@ x_values = np.linspace(0, waktuSimulasi, get_data_1)
 # Calculate time response parameters
 
 # Define the step response time
-# time_step = x_values / 50  # Assuming the time step is 1/50 of a second
-time_step = x_values  # Assuming the time step is 1/50 of a second
+
+time_step = x_values  # Assuming the time step 
 
 # Find peak values and their indices
 peaks, _ = find_peaks(speedValue)

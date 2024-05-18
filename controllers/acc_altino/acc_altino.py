@@ -99,9 +99,6 @@ while driver.step() != -1:
     dE_PS = fuzz.trimf(x_error, [0, 2.5, 5])
     dE_PB = fuzz.trapmf(x_error, [2.5,5,11,11])
 
-    # pwm_lambat =  fuzz.trapmf(x_pwm,[-5,-5,-2.5,0])
-    # pwm_normal =  fuzz.trimf(x_pwm,[-2.5,0,2.5])
-    # pwm_cepat =  fuzz.trapmf(x_pwm,[0,2.5,5,5])
     pwm_lambat =  fuzz.trimf(x_pwm,[0,0.3,0.6])
     pwm_normal =  fuzz.trimf(x_pwm,[0.6,0.9,1.2])
     pwm_cepat =  fuzz.trimf(x_pwm,[1.2,1.5,1.8])
