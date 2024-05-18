@@ -258,14 +258,14 @@ plt.title('Speed Response with Time Response Characteristics')
 plt.legend()
 
 
-# # Annotate steady state value
+## Annotate steady state value
 # plt.axhline(y=steady_state_value, color='k', linestyle='--', label=f'Steady State Value: {steady_state_value:.2f}')
 # plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
 #              xy=(time_step[-1], steady_state_value), 
 #              xytext=(time_step[-1] - 2, steady_state_value + 0.1),
 #              arrowprops=dict(facecolor='black', arrowstyle='->'))
 
-# Annotate peak time and peak value
+## Annotate peak time and peak value
 # if peak_time and peak_value:
 #     plt.plot(peak_time, peak_value, 'ro', label=f'peak time: {peak_time:.2f}')  # Mark the peak point
 #     plt.plot(peak_time, peak_value, 'ro', label=f'peak Value: {peak_value:.2f}')  # Mark the peak point
@@ -274,7 +274,7 @@ plt.legend()
 #                  xytext=(peak_time - 3, peak_value - 0.1),
 #                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
-# Annotate rise time
+## Annotate rise time
 # if rise_time:
 #     plt.axvline(x=rise_time, color='g', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
 #     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
@@ -290,7 +290,7 @@ plt.legend()
     #              xytext=(rise_time + 1, -0.05),
     #              arrowprops=dict(facecolor='black', arrowstyle='->'))
 
-# Annotate settling time
+## Annotate settling time
 # if settling_time:
 #     plt.axvline(x=settling_time, color='b', linestyle='--', label=f'Settling Time: {settling_time:.2f}s')
 #     plt.annotate(f'Settling Time: {settling_time:.2f}s', 
@@ -298,7 +298,7 @@ plt.legend()
 #                  xytext=(settling_time + 1, steady_state_value - 0.1),
 #                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
-# # Annotate overshoot
+## Annotate overshoot
 # if overshoot:
 #     plt.annotate(f'Defuzzifikasi: {overshoot:.2f}%', 
 #                  xy=(peak_time, peak_value), 
