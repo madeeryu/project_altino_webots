@@ -182,7 +182,7 @@ while driver.step() != -1:
     if sRightVal > 300:
         angle -= 0.003
 
-    # clamp speed and angle to max values
+    # membuat batasan kecepatan dan angle untuk mobil berbelok
     if normal_speed > 1:
         normal_speed = 1
     elif speed < -1 * maxSpeed:
@@ -211,18 +211,17 @@ get_data = shape_value.shape
 get_data_1 = get_data[0]
 x_values = np.linspace(0, waktuSimulasi, get_data_1)
 
-# Calculate time response parameters
 
-# Define the step response time
+# definisi time step 
 
 time_step = x_values  # Assuming the time step 
 
-# Find peak values and their indices
+# Menemikan peak time dan peak value menggunakan libary scpiy
 peaks, _ = find_peaks(speedValue)
 peak_time = time_step[peaks[0]] if peaks.size > 0 else None
 peak_value = speedValue[peaks[0]] if peaks.size > 0 else None
 
-# Find the steady-state value (assuming the last value as steady-state)
+# nilai Steady State
 steady_state_value = speedValue[-1]
 
 # Calculate the rise time (time to go from 10% to 90% of the steady-state value)
