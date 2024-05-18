@@ -245,7 +245,7 @@ settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else
 print(f"Peak Time: {peak_time} seconds")
 print(f"Peak Value: {peak_value}")
 print(f"Rise Time: {rise_time} seconds")
-print(f"Overshoot: {overshoot}%")
+# print(f"Overshoot: {overshoot}%")
 print(f"Settling Time: {settling_time} seconds")
 print(f"Steady State Value: {steady_state_value} seconds")
 
