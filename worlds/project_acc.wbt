@@ -1,0 +1,1448 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/saeon/protos/Altino.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  window "generic_window"
+}
+Viewpoint {
+  orientation -0.4737947162464409 0.732523050965743 0.4888031778341812 1.9146398283611696
+  position -5.083495837539069 4.502566608666554 3.1219321564385845
+  follow "vehicle"
+}
+TexturedBackground {
+  texture "music_hall"
+  luminosity 0
+  skyColor [
+    1 1 1
+  ]
+}
+TexturedBackgroundLight {
+}
+Wall {
+  translation 0.578874 -1.39137 0.05
+  rotation 0 0 -1 -5.307179586466759e-06
+  name "wall(23)"
+  size 0.1 1 0.4
+}
+Wall {
+  translation -5.73108 3.3271 0.0840167
+  rotation 1 0 0 -0.5235953061004254
+  name "wall(24)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -5.73088 0.827713 0.557
+  rotation -1 0 0 0.261796
+  name "wall(3)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -6.69088 0.807767 0.633587
+  rotation 1 0 0 2.618
+  name "wall(12)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -6.69088 1.25613 0.490184
+  rotation 1 0 0 2.8798
+  name "wall(30)"
+  size 0.35 1.2 0.01
+}
+Solid {
+  translation -6.6909 -0.29 1.08786
+  rotation 1 0 0 2.8798
+  children [
+    Solid {
+      translation 0.01 0 0.005
+      children [
+        Shape {
+          appearance Roughcast {
+            textureTransform TextureTransform {
+              scale 2.4 1
+            }
+          }
+          geometry Box {
+            size 0.35 1.2 0.01
+          }
+        }
+      ]
+      boundingObject Box {
+        size 0.35 1.2 0.01
+      }
+    }
+  ]
+  name "wall(14)"
+  model "wall"
+}
+Wall {
+  translation -6.68088 -5.0331 0.730372
+  rotation 1 0 0 2.618
+  name "wall(22)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -6.68088 -4.70363 0.59585
+  rotation 1 0 0 2.8798
+  name "wall(41)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -6.68088 -5.79223 1.09413
+  rotation 1 1.26251e-09 -9.5898e-09 2.87978
+  name "wall(25)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -6.68088 -6.28523 1.15897
+  rotation 1 -1.0928e-14 -9.58979e-09 3.14158
+  name "wall(42)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -6.68088 -7.13715 0.80586
+  rotation -0.9999999999999999 2.56959e-09 9.589779999999998e-09 2.6180053071795863
+  name "wall(26)"
+  size 0.33 0.9 0.01
+}
+Wall {
+  translation -6.68088 -6.96846 1.0437
+  rotation 1 -1.26254e-09 -9.58979e-09 -2.8798053071795864
+  name "wall(43)"
+  size 0.37 0.9 0.01
+}
+Wall {
+  translation -6.69088 -7.8166 0.8164
+  rotation 1 -1.26254e-09 -9.58979e-09 -2.8798053071795864
+  name "wall(44)"
+  size 0.38 0.9 0.01
+}
+Wall {
+  translation -6.68088 -8.29253 0.692859
+  rotation -1 1.26254e-09 9.58979e-09 2.87981
+  name "wall(45)"
+  size 0.38 0.9 0.01
+}
+Wall {
+  translation -6.68083 -1.268 1.2431
+  rotation 1 0 0 3.14159
+  name "wall(15)"
+  size 0.35 0.8 0.01
+}
+Wall {
+  translation -6.68088 -2.01105 1.045
+  rotation 1 0 0 -2.6179953071795863
+  name "wall(16)"
+  size 0.35 0.8 0.01
+}
+Wall {
+  translation -6.68088 -2.69519 0.65
+  rotation 1 0 0 -2.6179953071795863
+  name "wall(19)"
+  size 0.35 0.8 0.01
+}
+Wall {
+  translation -6.68088 -3.27363 0.4504
+  rotation 1 0 0 3.14159
+  name "wall(20)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -5.73 -1.21848 0.557249
+  rotation 1 0 0 0.261803
+  name "wall(27)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -5.73 -3.40164 0.779448
+  rotation 1 0 0 -0.785395307179586
+  name "wall(8)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -5.73 -2.96021 0.553642
+  rotation -1 0 0 0.261797
+  name "wall(32)"
+  size 0.35 1.2 0.01
+}
+Wall {
+  translation -5.73 -4.03439 1.335
+  rotation -1 0 0 -2.6180053071795863
+  name "wall(33)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -5.73 -4.39097 1.498
+  rotation 1 0 0 2.8798
+  name "wall(17)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -4.68145 1.536
+  rotation 1 0 0 -3.1415853071795863
+  name "wall(35)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -4.97109 1.49736
+  rotation -1 0 0 2.87979
+  name "wall(36)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -5.25123 1.42229
+  rotation -1 0 0 2.87979
+  name "wall(37)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -5.52303 1.31
+  rotation -1 0 0 2.61799
+  name "wall(38)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -6.97902 0.513
+  rotation -1 0 0 2.87979
+  name "wall(40)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation -5.73 -6.23315 0.9
+  rotation -1 0 0 2.61799
+  name "wall(39)"
+  size 0.35 1.4 0.01
+}
+Wall {
+  translation -5.73 -3.30997 0.680179
+  rotation 1 0 0 -0.523595307179586
+  name "wall(34)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -5.73 3.54023 -0.00416034
+  rotation -1 0 0 0.261796
+  name "wall(2)"
+  size 0.35 0.5 0.01
+}
+Wall {
+  translation -5.73108 1.54635 0.3643
+  rotation -1 0 0 0.261796
+  name "wall(13)"
+  size 0.35 0.3 0.01
+}
+Wall {
+  translation 2.495 -0.412769 0.728313
+  rotation 0.6928985765162045 -0.19946747012768906 -0.6928955845022229 2.7735
+  name "wall(6)"
+  size 0.01 1.4 1
+}
+Wall {
+  translation 2.495 -3.86569 0.456413
+  rotation -0.694747672034365 -0.18615991212053493 0.6947446720357812 2.77349
+  name "wall(7)"
+  size 0.01 2.7 1
+}
+Wall {
+  translation -5.715 -8.88833 0.6664
+  rotation 0.7071052811801611 0.707108281181354 3.446191370376761e-06 3.14159
+  name "wall(9)"
+  size 0.01 2.7 1
+}
+Wall {
+  translation -5.715 4.93167 0.626401
+  rotation 0.7071052811801611 0.707108281181354 3.446191370376761e-06 3.14159
+  name "wall(46)"
+  size 0.01 2.7 1
+}
+Wall {
+  translation -5.73 1.91 0
+  rotation 0 0 1 1.5708
+  name "wall(1)"
+  size 1.808 0.35 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -6.69 1.81 -0.0333
+  rotation 0 0 1 1.5708
+  name "wall(11)"
+  size 1 0.35 0.39
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -5.73 -2.52 0.03
+  rotation 0 0 1 1.5708
+  name "wall(31)"
+  size 1.808 0.35 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -5.73 -7.98 0.09
+  rotation 0 0 1 1.5708
+  name "wall(18)"
+  size 1.808 0.35 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -6.68 -8.43 0.2
+  rotation 0 0 1 1.5708
+  name "wall(28)"
+  size 1.808 0.35 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -6.68 -4.02 0.0611
+  rotation 0 0 1 1.5708
+  name "wall(21)"
+  size 1 0.38 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -6.68 -4.03 0.04
+  rotation 0 0 1 1.5708
+  name "wall(29)"
+  size 1 0.33 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation -5.73 -0.19 0.33
+  rotation 0 0 1 1.5708
+  name "wall(5)"
+  size 0.9 0.35 0.392
+  appearance Roughcast {
+    colorOverride 1 0 0.0156863
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation 2.54554 -1.87173 0.607032
+  rotation -0.7080341707435193 0.015539903747471471 0.706007170254705 -3.1413053071795862
+  name "wall(4)"
+  size 1 1.7 1.1
+  appearance Roughcast {
+    colorOverride 1 0 0
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Altino {
+  hidden position_0_0 -0.0003423208427904868
+  hidden position2_0_0 414.8810258830684
+  hidden position_0_1 -0.0003420947678634512
+  hidden position2_0_1 415.17516124700126
+  hidden position_0_2 414.8793922646646
+  hidden position_0_3 415.17352517863844
+  hidden rotation_1 0.00017116014674171763 -0.9999983855791362 0.001788726733112979 0.19079591537514695
+  hidden rotation_2 -0.0001710473421941552 0.9999997462358562 0.0006915714208050657 0.48493109144004526
+  hidden rotation_3 0 -0.9999999999999999 0 0.1891619908118948
+  hidden rotation_4 0 1 0 0.4832949047857348
+  translation -6.667761640542439 -8.745161756946402 0.61148171669791
+  rotation 0.03271678176272717 -0.03679708929653466 0.9987870575905522 1.6158921371832742
+  controller "<none>"
+  controllerArgs [
+    ""
+  ]
+}
+Altino {
+  hidden position_0_0 0.004749182696123265
+  hidden position2_0_0 1206.2341302358968
+  hidden position_0_1 0.004778573624656887
+  hidden position2_0_1 1203.6625436550619
+  hidden position_0_2 1206.2123330535971
+  hidden position_0_3 1203.6406497116577
+  hidden rotation_1 0.002399875019964052 0.9999970379144505 0.00040590912002687514 3.4795437326711784
+  hidden rotation_2 -0.0028066055989513306 -0.9947090633673403 0.10269373018777941 6.237105493137591
+  hidden rotation_3 0 1 0 3.501914944666114
+  hidden rotation_4 0 -0.9999999999999999 0 6.259820314751668
+  translation -5.72107 4.68797 0.0185887
+  rotation -0.003090668548349921 -0.0030638285609563424 0.9999905303163993 -1.6398353071795864
+  name "vehicle(1)"
+  controller "coba_plot"
+  controllerArgs [
+    ""
+  ]
+}
+Solid {
+  translation 2.28 -1.89736 1.12876
+  rotation -2.1751799999992504e-07 8.01208999999724e-07 0.9999999999996554 1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 1.7 0.1 0.6
+      }
+    }
+  ]
+  name "solid(8)"
+}
+Solid {
+  translation -4.78 -2.54736 -0.18124
+  rotation -2.1751799999992504e-07 8.01208999999724e-07 0.9999999999996554 1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 15 0.1 0.6
+      }
+    }
+  ]
+  name "solid(9)"
+}
+Solid {
+  translation -5.31 -2.49736 -0.18124
+  rotation -2.1751799999992504e-07 8.01208999999724e-07 0.9999999999996554 1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 15 0.1 0.6
+      }
+    }
+  ]
+  name "solid(12)"
+}
+Solid {
+  translation 1.74 -0.567644 0.76556
+  rotation -0.25056306820553154 0.25056206820525934 0.9351132545462786 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(6)"
+}
+Solid {
+  translation -5.957 3.52 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(28)"
+}
+Solid {
+  translation -5.957 3.95 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(91)"
+}
+Solid {
+  translation -5.957 4.31 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(111)"
+}
+Solid {
+  translation -5.357 4.97 -0.26
+  rotation 0 0 1 -3.1415853071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(112)"
+}
+Solid {
+  translation -6.347 4.97 -0.26
+  rotation 0 0 1 -3.1415853071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(64)"
+}
+Solid {
+  translation -5.506 3.52 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(30)"
+}
+Solid {
+  translation -5.506 3.0985 0.209937
+  rotation -0.25056306820553154 0.25056206820525934 0.9351132545462786 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(32)"
+}
+Solid {
+  translation -5.506 0.675724 0.578005
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(2)"
+}
+Solid {
+  translation -5.956 0.667958 0.549028
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(3)"
+}
+Solid {
+  translation -5.956 -0.193966 0.672302
+  rotation 6.30423e-07 -1.66593e-06 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(4)"
+}
+Solid {
+  translation -5.956 -0.643966 0.672302
+  rotation 6.30423e-07 -1.66593e-06 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(52)"
+}
+Solid {
+  translation -5.506 4.389 -0.0426249
+  rotation -8.40341e-07 1.74632e-06 1 1.57081
+  children [
+    Shape {
+      geometry Box {
+        size 0.45 0.1 0.2
+      }
+    }
+  ]
+  name "solid(47)"
+}
+Solid {
+  translation -5.506 4.759 -0.0426255
+  rotation -8.40341e-07 1.74632e-06 1 1.57081
+  children [
+    Shape {
+      geometry Box {
+        size 0.45 0.1 0.2
+      }
+    }
+  ]
+  name "solid(110)"
+}
+Solid {
+  translation -5.506 -0.403966 0.692302
+  rotation 6.30423e-07 -1.66593e-06 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(5)"
+}
+Solid {
+  translation -5.506 -1.54593 0.38518
+  rotation -0.25056291350031 0.25055691350238135 -0.935114677178364 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(7)"
+}
+Solid {
+  translation -5.506 -2.19593 0.38518
+  rotation -0.7071147811388004 0.7070987811437527 -2.1410793373081645e-07 3.14159
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(53)"
+}
+Solid {
+  translation -5.506 -2.69353 0.451102
+  rotation -0.7040700129912044 0.7040550129909277 -0.09269280171032869 -2.9567453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(92)"
+}
+Solid {
+  translation -5.506 -3.43007 0.793368
+  rotation 0.6786048666965696 -0.6785908666993198 0.2810869447839887 2.59358
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(94)"
+}
+Solid {
+  translation -5.506 -4.41483 1.50239
+  rotation -0.7040700456222302 0.7040550456212582 -0.0926923060062628 -2.9567453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(96)"
+}
+Solid {
+  translation -5.956 -4.41484 1.50239
+  rotation -0.7040700456222302 0.7040550456212582 -0.0926923060062628 -2.9567453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(97)"
+}
+Solid {
+  translation -5.956 -5.18003 1.44318
+  rotation -0.7071142811497276 0.7070992811437635 2.7697211012453767e-07 3.14159
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(98)"
+}
+Solid {
+  translation -5.506 -5.18003 1.44318
+  rotation -0.7071142811497276 0.7070992811437635 2.7697211012453767e-07 3.14159
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(100)"
+}
+Solid {
+  translation -5.956 -5.72003 1.18338
+  rotation 0.6947538013289261 -0.6947388013332155 -0.18615894676618133 -2.7734953071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(99)"
+}
+Solid {
+  translation -5.956 -6.49077 0.73838
+  rotation 0.6947538013289261 -0.6947388013332155 -0.18615894676618133 -2.7734953071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(104)"
+}
+Solid {
+  translation -5.956 -7.60945 0.42838
+  rotation -3.10121e-07 9.07453e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(105)"
+}
+Solid {
+  translation -5.956 -8.49945 0.42838
+  rotation -3.10121e-07 9.07453e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(108)"
+}
+Solid {
+  translation -5.956 -8.94945 0.42838
+  rotation -0.06403480496125552 0.03141500243395532 -0.997453077280154 -1.5307179586088182e-05
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(109)"
+}
+Solid {
+  translation -5.136 -8.94944 -0.00162
+  rotation -0.06403480496125552 0.03141500243395532 -0.997453077280154 -1.5307179586088182e-05
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(10)"
+}
+Solid {
+  translation -5.506 -7.60945 0.42838
+  rotation -3.10121e-07 9.07453e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(106)"
+}
+Solid {
+  translation -5.506 -8.38945 0.42838
+  rotation -3.10121e-07 9.07453e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(107)"
+}
+Solid {
+  translation -5.476 -5.72003 1.18338
+  rotation 0.6947538013289261 -0.6947388013332155 -0.18615894676618133 -2.7734953071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(103)"
+}
+Solid {
+  translation -5.506 -5.72003 1.18338
+  rotation 0.6947538013289261 -0.6947388013332155 -0.18615894676618133 -2.7734953071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(101)"
+}
+Solid {
+  translation -5.506 -6.52541 0.71838
+  rotation 0.6947538013289261 -0.6947388013332155 -0.18615894676618133 -2.7734953071795863
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(102)"
+}
+Solid {
+  translation -5.956 -3.43007 0.793367
+  rotation 0.6786048666965696 -0.6785908666993198 0.2810869447839887 2.59358
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(95)"
+}
+Solid {
+  translation -5.956 -2.69353 0.451101
+  rotation -0.7040700129912044 0.7040550129909277 -0.09269280171032869 -2.9567453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(93)"
+}
+Solid {
+  translation -5.956 -2.19593 0.38518
+  rotation -0.7071147811388004 0.7070987811437527 -2.1410793373081645e-07 3.14159
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(90)"
+}
+Solid {
+  translation -5.956 -1.54593 0.38518
+  rotation -0.25056291350031 0.25055691350238135 -0.935114677178364 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.2
+      }
+    }
+  ]
+  name "solid(11)"
+}
+Solid {
+  translation -5.956 3.0985 0.209937
+  rotation -0.25056306820553154 0.25056206820525934 0.9351132545462786 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(33)"
+}
+Solid {
+  translation -6.916 3.20854 0.118339
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(15)"
+}
+Solid {
+  translation -6.906 2.75074 0.303107
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(18)"
+}
+Solid {
+  translation -6.906 0.947612 0.608122
+  rotation -0.25056406820530264 0.250561068204486 0.9351132545444084 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(23)"
+}
+Solid {
+  translation -6.906 0.194186 1.04312
+  rotation -0.25056406820530264 0.250561068204486 0.9351132545444084 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(26)"
+}
+Solid {
+  translation -6.906 -0.277051 1.17213
+  rotation -0.12942995977239813 0.12942595977364138 0.983105694444899 1.58785
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(27)"
+}
+Solid {
+  translation -6.456 -0.277051 1.17213
+  rotation -0.12942995977239816 0.1294259597736414 0.9831056944448991 1.58785
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(63)"
+}
+Solid {
+  translation -6.906 -1.10776 1.28473
+  rotation 1.63028e-06 3.17033e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(35)"
+}
+Solid {
+  translation -6.456 -1.10776 1.28473
+  rotation 1.63028e-06 3.17033e-07 -1 -1.5708153071795863
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(62)"
+}
+Solid {
+  translation -6.896 -1.89276 1.12019
+  rotation -0.25056185072155784 0.25055885072334516 -0.9351144428823587 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(36)"
+}
+Solid {
+  translation -6.456 -1.89276 1.12019
+  rotation -0.25056185072155784 0.25055885072334516 -0.9351144428823587 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(61)"
+}
+Solid {
+  translation -6.896 -2.67216 0.67019
+  rotation -0.25056185072155784 0.25055885072334516 -0.9351144428823587 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(37)"
+}
+Solid {
+  translation -6.456 -2.67216 0.67019
+  rotation -0.25056185072155784 0.25055885072334516 -0.9351144428823587 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(60)"
+}
+Solid {
+  translation -6.896 -3.49216 0.53019
+  rotation -1.30534e-06 -1.4359e-06 1 1.57082
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(38)"
+}
+Solid {
+  translation -6.456 -3.49216 0.47019
+  rotation -1.30534e-06 -1.4359e-06 1 1.57082
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(59)"
+}
+Solid {
+  translation -6.896 -4.24216 0.52019
+  rotation -1.30534e-06 -1.4359e-06 1 1.57082
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(39)"
+}
+Solid {
+  translation -6.456 -4.24216 0.50019
+  rotation -1.30534e-06 -1.4359e-06 1 1.57082
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(58)"
+}
+Solid {
+  translation -6.896 -4.94716 0.75598
+  rotation -0.25056391349821094 0.2505559135009727 0.9351146771718184 1.63786
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(40)"
+}
+Solid {
+  translation -6.456 -4.94716 0.75598
+  rotation -0.25056391349821094 0.2505559135009727 0.9351146771718184 1.63786
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(57)"
+}
+Solid {
+  translation -6.896 -5.25892 0.93598
+  rotation 0.25056391349821094 -0.2505559135009727 -0.9351146771718184 -1.6378553071795858
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(41)"
+}
+Solid {
+  translation -6.456 -5.25892 0.93598
+  rotation -0.25056391349821094 0.2505559135009727 0.9351146771718184 1.63786
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(54)"
+}
+Solid {
+  translation -6.896 -6.01892 1.12598
+  rotation 6.80576e-07 3.28489e-07 -1 -1.570825307179586
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(42)"
+}
+Solid {
+  translation -6.896 -6.25892 1.12598
+  rotation 6.80576e-07 3.28489e-07 -1 -1.570825307179586
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(43)"
+}
+Solid {
+  translation -6.456 -6.25892 1.12598
+  rotation 6.80576e-07 3.28489e-07 -1 -1.570825307179586
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(51)"
+}
+Solid {
+  translation -6.456 -6.02892 1.12598
+  rotation 6.80576e-07 3.28489e-07 -1 -1.570825307179586
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(21)"
+}
+Solid {
+  translation -6.896 -7.10544 1.04167
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(44)"
+}
+Solid {
+  translation -6.456 -7.15374 1.02872
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(50)"
+}
+Solid {
+  translation -6.456 -7.99415 0.803557
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(49)"
+}
+Solid {
+  translation -6.456 -8.47715 0.674157
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(48)"
+}
+Solid {
+  translation -6.896 -7.95551 0.813909
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(45)"
+}
+Solid {
+  translation -6.896 -8.54477 0.65604
+  rotation 0.12942801002775903 -0.12942501002752663 0.9831060761686041 1.58787
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(46)"
+}
+Solid {
+  translation -6.466 0.947612 0.608122
+  rotation -0.25056406820530264 0.250561068204486 0.9351132545444084 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(24)"
+}
+Solid {
+  translation -6.466 0.168212 1.05812
+  rotation -0.25056406820530264 0.250561068204486 0.9351132545444084 1.63784
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(25)"
+}
+Solid {
+  translation -6.466 3.22408 0.176293
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(16)"
+}
+Solid {
+  translation -6.466 2.7604 0.30052
+  rotation 0.12942894302144423 -0.12942794302188446 -0.9831055672070398 -1.5878453071795864
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(17)"
+}
+Solid {
+  translation -6.466 1.89106 0.403449
+  rotation 6.30423e-07 -1.05855e-06 -1 -1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(19)"
+}
+Solid {
+  translation -6.906 1.76106 0.403449
+  rotation 6.30423e-07 -1.05855e-06 -1 -1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(22)"
+}
+Solid {
+  translation -6.906 1.90106 0.403449
+  rotation 6.30423e-07 -1.05855e-06 -1 -1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(68)"
+}
+Solid {
+  translation -6.466 1.77106 0.403449
+  rotation 6.30423e-07 -1.05855e-06 -1 -1.5708053071795867
+  children [
+    Shape {
+      geometry Box {
+        size 0.9 0.1 0.2
+      }
+    }
+  ]
+  name "solid(20)"
+}
+Solid {
+  translation -5.956 2.23 0.16
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(29)"
+}
+Solid {
+  translation -5.506 2.23 0.16
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(31)"
+}
+Solid {
+  translation -5.506 1.66 0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(34)"
+}
+Solid {
+  translation -5.956 1.65 0.22
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(1)"
+}
+RectangleArena {
+  floorSize 20 20
+}
+Wall {
+  translation -6.69108 3.32451 0.0743571
+  rotation -1 0 0 0.261796
+  name "wall(10)"
+  size 0.35 2.1 0.01
+}
+Solid {
+  translation -6.927 4.31 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(14)"
+}
+Solid {
+  translation -6.457 4.31 -0.26
+  rotation 0 0 1 1.5708
+  children [
+    Shape {
+      geometry Box {
+        size 1.3 0.1 0.6
+      }
+    }
+  ]
+  name "solid(13)"
+}
