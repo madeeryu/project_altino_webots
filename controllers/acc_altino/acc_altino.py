@@ -206,11 +206,7 @@ while driver.step() != -1:
     print("signal : ", signal)
     print("RPM : ", rpm)
     print("roll : ", roll)
-    #     # print("Angle: %.2f" % angle)
-    #     # print("ERROR : ", error)
-    #     # print("Throttle: {} " .format (speed))
-    # print(speed)
-        # print("Sensor pitch Value: {}".format(roll))
+  
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
     # printCounter += 1
