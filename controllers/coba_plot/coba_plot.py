@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 from scipy.interpolate import interp1d
 
+#---------------------- DEKLARASI FUNGSI ROBOT ALTINO ---------------------#
 sensorMax = 1000
 driver = Driver()
 
@@ -167,6 +168,8 @@ while driver.step() != -1:
     
     pwm = signal * roll / signal
     rpm = calculate_maxSpeedAltino(pwm)
+
+    #kecepatan motor menggunakan fuzzy control
     speed = normal_speed + rpm
 
 #------------------ SETTING ANGLE ROBOT ----------------#
