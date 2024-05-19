@@ -244,10 +244,6 @@ peak_value = smoothed_speed_data[peaks[0]] if peaks.size > 0 else None
 steady_state_value = smoothed_speed_data[-1]
 
 # Calculate the rise time (time to go from 10% to 90% of the steady-state value)
-# interp_speed = interp1d(time_step, speedValue)
-# rise_time_indices = np.where((speedValue >= 0.1 * steady_state_value) & (speedValue <= 0.9 * steady_state_value))[0]
-# rise_time = time_step[rise_time_indices[0]] if rise_time_indices.size > 0 else None
-
 time_10 = np.interp(1 * steady_state_value, smoothed_speed_data, time_step)
 time_90 = np.interp(9 * steady_state_value, smoothed_speed_data, time_step)
 rise_time = time_90 - time_10 if time_10 and time_90 else None
