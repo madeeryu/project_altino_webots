@@ -222,38 +222,6 @@ x_values = np.linspace(0, waktuSimulasi, get_data_1)
 
 time_step = x_values  # Assuming the time step 
 
-# Menemikan peak time dan peak value menggunakan libary scpiy
-peaks, _ = find_peaks(speedValue)
-peak_time = time_step[peaks[0]] if peaks.size > 0 else None
-peak_value = speedValue[peaks[0]] if peaks.size > 0 else None
-
-# nilai Steady State
-steady_state_value = speedValue[-1]
-
-# Calculate the rise time (time to go from 10% to 90% of the steady-state value)
-# interp_speed = interp1d(time_step, speedValue)
-# rise_time_indices = np.where((speedValue >= 0.1 * steady_state_value) & (speedValue <= 0.9 * steady_state_value))[0]
-# rise_time = time_step[rise_time_indices[0]] if rise_time_indices.size > 0 else None
-
-interp_speed = interp1d(time_step, speedValue, kind='linear')
-time_10 = np.interp(0.1 * steady_state_value, speedValue, time_step)
-time_90 = np.interp(0.9 * steady_state_value, speedValue, time_step)
-rise_time = time_90 - time_10 if time_10 and time_90 else None
-
-# Calculate overshoot (percentage above the steady-state value)
-overshoot = ((peak_value - steady_state_value) / steady_state_value) * 100 if peak_value and steady_state_value else None
-
-# Calculate settling time (time to remain within 2% of the steady-state value)
-settling_indices = np.where(np.abs(speedValue - steady_state_value) <= 0.02 * steady_state_value)[0]
-settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else None
-
-# Print the results
-print(f"Peak Time: {peak_time} seconds")
-print(f"Peak Value: {peak_value}")
-print(f"Rise Time: {rise_time} seconds")
-# print(f"Overshoot: {overshoot}%")
-print(f"Settling Time: {settling_time} seconds")
-print(f"Steady State Value: {steady_state_value} seconds")
 
 # Plot the speed value and annotate the time response parameters
 plt.figure(figsize=(12, 6))
@@ -273,52 +241,6 @@ plt.legend()
 # plt.legend()
 
 
-## Annotate steady state value
-# plt.axhline(y=steady_state_value, color='k', linestyle='--', label=f'Steady State Value: {steady_state_value:.2f}')
-# plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
-#              xy=(time_step[-1], steady_state_value), 
-#              xytext=(time_step[-1] - 2, steady_state_value + 0.1),
-#              arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-## Annotate peak time and peak value
-# if peak_time and peak_value:
-#     plt.plot(peak_time, peak_value, 'ro', label=f'peak time: {peak_time:.2f}')  # Mark the peak point
-#     plt.plot(peak_time, peak_value, 'ro', label=f'peak Value: {peak_value:.2f}')  # Mark the peak point
-#     plt.annotate(f'Peak Time: {peak_time:.2f}s\nPeak Value: {peak_value:.2f}', 
-#                  xy=(peak_time, peak_value), 
-#                  xytext=(peak_time - 3, peak_value - 0.1),
-#                  arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-## Annotate rise time
-# if rise_time:
-#     plt.axvline(x=rise_time, color='g', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
-#     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
-#                  xy=(rise_time, 0), 
-#                  xytext=(rise_time + 1, -0.05),
-#                  arrowprops=dict(facecolor='black', arrowstyle='->'))
-# if rise_time:
-    # plt.axvline(x=time_10, color='g', linestyle='--', label=f'Rise Time Start: {time_10:.2f}s')
-    # plt.axvline(x=time_90, color='red', linestyle='--', label=f'Rise Time End: {time_90:.2f}s')
-    # plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
-    # plt.annotate(f'Rise Time: {rise_time:.2f}s', 
-    #              xy=(rise_time, 0), 
-    #              xytext=(rise_time + 1, -0.05),
-    #              arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-## Annotate settling time
-# if settling_time:
-#     plt.axvline(x=settling_time, color='b', linestyle='--', label=f'Settling Time: {settling_time:.2f}s')
-#     plt.annotate(f'Settling Time: {settling_time:.2f}s', 
-#                  xy=(settling_time, steady_state_value), 
-#                  xytext=(settling_time + 1, steady_state_value - 0.1),
-#                  arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-## Annotate overshoot
-# if overshoot:
-#     plt.annotate(f'Defuzzifikasi: {overshoot:.2f}%', 
-#                  xy=(peak_time, peak_value), 
-#                  xytext=(peak_time + 1, peak_value - 0.1),
-#                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 plt.grid(True)
 plt.legend()
