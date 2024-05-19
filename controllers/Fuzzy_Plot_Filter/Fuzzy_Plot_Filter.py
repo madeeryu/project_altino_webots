@@ -9,8 +9,11 @@ from scipy.ndimage import gaussian_filter1d
 sensorMax = 1000
 driver = Driver()
 
+#Penyimpanan data
 speedValue = []
 sensroValue = []
+
+
 startTime = time.time()
 
 basicTimeStep = int(driver.getBasicTimeStep())
@@ -47,7 +50,7 @@ setpoint  = 0
 speed = 0
 maxSpeed = 1.8
 minSpeed = 0
-normal_speed = 0
+normal_speed = 1.01
 
 # defaults for this controller
 useManual = False
@@ -163,8 +166,10 @@ while driver.step() != -1:
 
     aggregated = np.fmax(hasil_lambat,np.fmax(hasil_normal,hasil_cepat))
     signal = fuzz.defuzz(x_pwm, aggregated, 'centroid')
+    
+    #fix bug
     if signal == 0:
-       signal = 1
+       signal = roll
     
     pwm = signal * roll / signal
     rpm = calculate_maxSpeedAltino(pwm)
@@ -207,31 +212,28 @@ while driver.step() != -1:
     # waktuSimulasi = timeS - startTime
     if waktuSimulasi >= 15:
         break
-    # print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
-    print(f'{speed:.2f}')
+    print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
+    # print(f'{speed:.2f}')
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
 
 #memproses data yang didapatkan untuk dijadikan sumbu Y pada plot
 
-#shape Pada speed motor
+#mengolah data
 shape_value = np.array(speedValue)
-get_data = shape_value.shape
-get_data_1 = get_data[0]
-x_values = np.linspace(0, waktuSimulasi, get_data_1)
+get_data = shape_value.shape # melihat struktur data yang tersumpan
+data_speed = get_data[0] # mengambil data banyak nya data yang tersimpan untuk dirubah kedalam satuan waktu
+x_values = np.linspace(0, waktuSimulasi, data_speed) # membuat waktu pada plot
+time_step = x_values  # membuat time step untuk plot 
 
-# definisi time step 
 
-time_step = x_values  # Assuming the time step 
-# Membuat array waktu dari 0 sampai 15 detik
 
 # Sinyal Gaussian dengan menggunakan filter Gaussian untuk menghaluskan data
-sigma = 2  # Parameter sigma untuk Gaussian filter yang menentukan seberapa halus sinyal
+sigma = 5  # Parameter sigma untuk Gaussian filter yang menentukan seberapa halus sinyal
 smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
 
 
 
-time_step = x_values  # Assuming the time step 
 
 # Menemikan peak time dan peak value menggunakan libary scpiy
 peaks, _ = find_peaks(smoothed_speed_data)
@@ -246,15 +248,15 @@ steady_state_value = smoothed_speed_data[-1]
 # rise_time_indices = np.where((speedValue >= 0.1 * steady_state_value) & (speedValue <= 0.9 * steady_state_value))[0]
 # rise_time = time_step[rise_time_indices[0]] if rise_time_indices.size > 0 else None
 
-time_10 = np.interp(0.1 * steady_state_value, smoothed_speed_data, time_step)
-time_90 = np.interp(0.9 * steady_state_value, smoothed_speed_data, time_step)
+time_10 = np.interp(1 * steady_state_value, smoothed_speed_data, time_step)
+time_90 = np.interp(9 * steady_state_value, smoothed_speed_data, time_step)
 rise_time = time_90 - time_10 if time_10 and time_90 else None
 
 # Calculate overshoot (percentage above the steady-state value)
 overshoot = ((peak_value - steady_state_value) / steady_state_value) * 100 if peak_value and steady_state_value else None
 
 # Calculate settling time (time to remain within 2% of the steady-state value)
-settling_indices = np.where(np.abs(smoothed_speed_data - steady_state_value) <= 0.02 * steady_state_value)[0]
+settling_indices = np.where(np.abs(smoothed_speed_data - steady_state_value) <= 0.2 * steady_state_value)[0]
 settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else None
 
 
@@ -292,7 +294,7 @@ plt.legend()
 # Annotate steady state value
 plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
              xy=(time_step[-1], steady_state_value), 
-             xytext=(time_step[-1]-0.1, steady_state_value + 0.1),
+             xytext=(time_step[-1]- 1, steady_state_value + 0.01),
              arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 # Annotate peak time and peak value
@@ -301,7 +303,7 @@ if peak_time and peak_value:
     plt.plot(peak_time, peak_value, 'ro', label=f'peak Value: {peak_value:.2f}')  # Mark the peak point
     plt.annotate(f'Peak Time: {peak_time:.2f}s\nPeak Value: {peak_value:.2f}', 
                  xy=(peak_time, peak_value), 
-                 xytext=(peak_time + 0.05, peak_value+ 0.05),
+                 xytext=(peak_time + 0.01, peak_value+ 0.01),
                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 # Annotate rise time
@@ -315,8 +317,8 @@ if peak_time and peak_value:
 if rise_time:
     plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
-                 xy=(rise_time, 0), 
-                 xytext=(rise_time, -0.05),
+                 xy=(rise_time, steady_state_value), 
+                 xytext=(rise_time, steady_state_value + 0.01),
                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 # Annotate settling time

@@ -2,9 +2,12 @@ from vehicle import Driver
 import numpy as np
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
+import time
+
 
 sensorMax = 1000
 driver = Driver()
+startTime = time.time()
 
 basicTimeStep = int(driver.getBasicTimeStep())
 sensorTimeStep = 4 * basicTimeStep
@@ -57,7 +60,8 @@ def calculate_maxSpeedAltino(parameters):
     return (parameters/100)*1.8
 
 while driver.step() != -1:
-
+#-------------DEKLARASI WAKTU--------------------------#     
+    timeS = time.time()
 #-------------DEKLARASI VARIABEL-----------------------# 
     #sensor accelerometer
     acc_value = acc_sensor.getValues()
@@ -156,11 +160,18 @@ while driver.step() != -1:
     aggregated = np.fmax(hasil_lambat,np.fmax(hasil_normal,hasil_cepat))
     signal = fuzz.defuzz(x_pwm, aggregated, 'centroid')
 
-    pwm = signal*roll/signal
+    if signal == 0:
+       signal = roll
     
+    pwm = signal * roll / signal
     rpm = calculate_maxSpeedAltino(pwm)
-    # speed+=1
-    speed = normal_speed + rpm
+
+    #kecepatan motor menggunakan fuzzy control
+    waktuSimulasi = timeS - startTime
+    if waktuSimulasi <= 1 :
+        speed = normal_speed
+    elif waktuSimulasi >= 1.001 :
+        speed = normal_speed + rpm
     # speed = normal_speed 
     # 48 53 tanpa fuzzy
     # 48 52 menggunakan fuzzy
@@ -203,9 +214,7 @@ while driver.step() != -1:
     # print("Angle: %.2f" % angle)
     # print("_______HASIL PRINT FUNGSI_____:")
     print(f"Angle : {angle:.2f}     || Throttle : {speed}       ||       Pitch Sensor : {roll:.2f}")
-    print("signal : ", signal)
-    print("RPM : ", rpm)
-    print("roll : ", roll)
+
   
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)

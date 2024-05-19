@@ -164,8 +164,10 @@ while driver.step() != -1:
 
     aggregated = np.fmax(hasil_lambat,np.fmax(hasil_normal,hasil_cepat))
     signal = fuzz.defuzz(x_pwm, aggregated, 'centroid')
+    
+    #fix bug
     if signal == 0:
-       signal = 1
+       signal = roll
     
     pwm = signal * roll / signal
     rpm = calculate_maxSpeedAltino(pwm)

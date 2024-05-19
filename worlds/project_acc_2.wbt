@@ -11,9 +11,8 @@ WorldInfo {
   window "generic_window"
 }
 Viewpoint {
-  orientation 0.33285744084847024 0.6954511734552746 -0.636830895459296 1.1831054807318369
-  position -11.578838947208316 11.152763153324681 14.183235710351541
-  follow "vehicle"
+  orientation -0.191424123620782 -0.1535317457483693 0.9694249883015569 4.648558068057565
+  position -1.302245542627357 9.141621644863994 1.2607791603952028
 }
 TexturedBackground {
   texture "music_hall"
@@ -53,6 +52,24 @@ Wall {
   rotation -1 0 0 0.26179599999999964
   name "wall(60)"
   size 0.35 1.2 0.01
+}
+Wall {
+  translation -0.66108 0.345818 0.91
+  rotation -1 0 0 0.261796
+  name "wall(4)"
+  size 0.35 0.1 0.01
+}
+Wall {
+  translation -0.66108 -0.352066 0.82452
+  rotation 1 0 0 0.5236020000000002
+  name "wall(6)"
+  size 0.35 0.4 0.01
+}
+Wall {
+  translation -0.66108 -0.657152 0.591
+  rotation 1 0 0 0.785401
+  name "wall(7)"
+  size 0.35 0.4 0.01
 }
 Wall {
   translation -1.34108 0.973632 0.744804
@@ -351,7 +368,7 @@ Wall {
   }
 }
 Wall {
-  translation -1.33 2.423 0.2117
+  translation -1.34 2.423 0.2117
   rotation 0 0 1 1.5708
   name "wall(48)"
   size 1.808 0.35 0.392
@@ -405,7 +422,7 @@ Wall {
   }
 }
 Wall {
-  translation -0.68 0.14 0.517
+  translation -0.68 0.06 0.54
   rotation 0 0 1 1.5708
   name "wall(53)"
   size 0.5 0.35 0.392
@@ -513,33 +530,17 @@ Wall {
   }
 }
 Altino {
-  hidden translation_1 0 0 0
-  hidden translation_2 0 0 0
-  hidden translation_3 0 0 0
-  hidden translation_4 0 0 0
-  translation -1.3490699971884597 5.820379959553768 0.019518460098732655
-  rotation -0.00025248156973510516 -0.0002707228927130366 -0.9999999314810837 1.5010953071401003
+  translation -2.49732 1.16033 0.936267
+  rotation -0.0002824613335851742 -0.00027957877000732515 -0.9999999210256499 1.5712873609175422
+  name "vehicle(2)"
   controller "<none>"
   controllerArgs [
     ""
   ]
 }
 Altino {
-  translation -2.4991515385680834 1.0459671554899286 0.9365185319718499
-  rotation -0.00024622798417812773 -0.0002605489832579033 0.9999999357430015 -1.5617153071795862
-  name "vehicle(2)"
-  controller "coba_coba_aja"
-  controllerArgs [
-    ""
-  ]
-}
-Altino {
-  hidden translation_1 0 0 0
-  hidden translation_2 0 0 0
-  hidden translation_3 0 0 0
-  hidden translation_4 0 0 0
-  translation -3.739078857344172 1.6563684593223134 1.5665184605894678
-  rotation -0.00025248157755867204 -0.00025949902334865255 -0.9999999344566528 1.543385085341209
+  translation -3.739078856773434 1.6563684385062567 1.5665184605894198
+  rotation -0.0002524815775855251 -0.0002594990233749958 -0.9999999344566528 1.5433850853412177
   name "vehicle(3)"
   controller "<none>"
   controllerArgs [
@@ -547,14 +548,19 @@ Altino {
   ]
 }
 Altino {
-  hidden translation_1 0 0 0
-  hidden translation_2 0 0 0
-  hidden translation_3 0 0 0
-  hidden translation_4 0 0 0
-  translation -0.6646345142370762 5.8005997951158745 0.01951845960580554
-  rotation -0.00025248198325358064 -0.000251053955514032 -0.9999999366123776 1.5764681373563372
+  translation -0.6646345143560264 5.800599774276901 0.01951846058845918
+  rotation -0.0002524815781572346 -0.00025105359025700034 -0.9999999366125716 1.57646813735614
   name "vehicle(1)"
   controller "<none>"
+  controllerArgs [
+    ""
+  ]
+}
+Altino {
+  translation -1.34457 5.81506 0.019513
+  rotation -0.0002524815781572346 -0.00025105359025700034 -0.9999999366125716 1.57646813735614
+  name "vehicle(4)"
+  controller "Fuzzy_Plot_Filter"
   controllerArgs [
     ""
   ]
@@ -1436,7 +1442,7 @@ Solid {
   name "solid(164)"
 }
 Solid {
-  translation -0.875996 -0.496248 0.71707
+  translation -0.885996 -0.496248 0.71707
   rotation -0.2505619594639642 0.25056095946412593 -0.9351138487168261 -1.6378453071795862
   children [
     Shape {
