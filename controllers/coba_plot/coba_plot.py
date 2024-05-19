@@ -11,6 +11,7 @@ sensorMax = 1000
 driver = Driver()
 
 speedValue = []
+sensroValue = []
 startTime = time.time()
 
 basicTimeStep = int(driver.getBasicTimeStep())
@@ -199,6 +200,7 @@ while driver.step() != -1:
 
     #------------------ SIMPAN DATA PLOT ---------------------#
     speedValue.append(speed)
+    sensroValue.append(roll)
     #-------------------batas simulasi ---------------------- #
     waktuSimulasi = timeS - startTime
     if waktuSimulasi >= 15:
@@ -208,7 +210,9 @@ while driver.step() != -1:
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
 
+#memproses data yang didapatkan untuk dijadikan sumbu Y pada plot
 
+#shape Pada speed motor
 shape_value = np.array(speedValue)
 get_data = shape_value.shape
 get_data_1 = get_data[0]
@@ -254,10 +258,19 @@ print(f"Steady State Value: {steady_state_value} seconds")
 
 # Plot the speed value and annotate the time response parameters
 plt.figure(figsize=(12, 6))
+plt.subplot(2,1,1)
 plt.plot(time_step, speedValue, label='Speed Value', color='orange')
 plt.xlabel('Time (seconds)')
 plt.ylabel('Speed')
 plt.title('Speed Response with Time Response Characteristics')
+plt.grid(True)
+plt.legend()
+
+plt.subplot(2,1,2)
+plt.plot(time_step, sensroValue, label='Sensor Value', color='blue')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Sensor Accelerometer')
+plt.title('Sensor Response with Time Response Characteristics')
 plt.legend()
 
 
