@@ -4,8 +4,7 @@ import time
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
-from scipy.interpolate import interp1d
-
+from scipy.ndimage import gaussian_filter1d
 #---------------------- DEKLARASI FUNGSI ROBOT ALTINO ---------------------#
 sensorMax = 1000
 driver = Driver()
@@ -48,7 +47,7 @@ setpoint  = 0
 speed = 0
 maxSpeed = 1.8
 minSpeed = 0
-normal_speed = 1
+normal_speed = 0
 
 # defaults for this controller
 useManual = False
@@ -94,7 +93,7 @@ while driver.step() != -1:
 #---------------------FUZZY LOGIC-------------------------#
     x_error = np.arange(-11,11,0.1)
     x_dError = np.arange(-11,11,0.1)
-    x_pwm = np.arange(0,1.8,0.1)
+    x_pwm = np.arange(0,1.8,0.01)
 
     e_NB =fuzz.trapmf(x_error, [-11,-11, -5, -2.5])
     e_NS =fuzz.trimf(x_error, [-5, -2.5, 0])
@@ -108,9 +107,9 @@ while driver.step() != -1:
     dE_PS = fuzz.trimf(x_dError, [0, 2.5, 5])
     dE_PB = fuzz.trapmf(x_dError, [2.5,5,11,11])
 
-    pwm_lambat =  fuzz.trimf(x_pwm,[0,0.3,0.6])
-    pwm_normal =  fuzz.trimf(x_pwm,[0.6,0.9,1.2])
-    pwm_cepat =  fuzz.trimf(x_pwm,[1.2,1.5,1.8])
+    pwm_lambat = fuzz.gaussmf(x_pwm, 0.3, 0.15)  # Terpusat di 0.3 dengan sigma 0.15
+    pwm_normal = fuzz.gaussmf(x_pwm, 0.9, 0.15)  # Terpusat di 0.9 dengan sigma 0.15
+    pwm_cepat = fuzz.gaussmf(x_pwm, 1.5, 0.15)   # Terpusat di 1.5 dengan sigma 0.15
 
     error = error_value 
     deltaError = dError
@@ -171,8 +170,11 @@ while driver.step() != -1:
     rpm = calculate_maxSpeedAltino(pwm)
 
     #kecepatan motor menggunakan fuzzy control
-    speed = normal_speed + rpm
-
+    waktuSimulasi = timeS - startTime
+    if waktuSimulasi <= 1 :
+        speed = normal_speed
+    elif waktuSimulasi >= 1.001 :
+        speed = normal_speed + rpm
 #------------------ SETTING ANGLE ROBOT ----------------#
     if fLeftVal > fRightVal:
         angle += (fLeftVal - fRightVal) / (300 * sensorMax) 
@@ -202,11 +204,11 @@ while driver.step() != -1:
     speedValue.append(speed)
     sensroValue.append(roll)
     #-------------------batas simulasi ---------------------- #
-    waktuSimulasi = timeS - startTime
+    # waktuSimulasi = timeS - startTime
     if waktuSimulasi >= 15:
         break
-    print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
-
+    # print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
+    print(f'{speed:.2f}')
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
 
@@ -221,27 +223,111 @@ x_values = np.linspace(0, waktuSimulasi, get_data_1)
 # definisi time step 
 
 time_step = x_values  # Assuming the time step 
+# Membuat array waktu dari 0 sampai 15 detik
+
+# Sinyal Gaussian dengan menggunakan filter Gaussian untuk menghaluskan data
+sigma = 2  # Parameter sigma untuk Gaussian filter yang menentukan seberapa halus sinyal
+smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
 
 
-# Plot the speed value and annotate the time response parameters
+
+time_step = x_values  # Assuming the time step 
+
+# Menemikan peak time dan peak value menggunakan libary scpiy
+peaks, _ = find_peaks(smoothed_speed_data)
+peak_time = time_step[peaks[0]] if peaks.size > 0 else None
+peak_value = smoothed_speed_data[peaks[0]] if peaks.size > 0 else None
+
+# nilai Steady State
+steady_state_value = smoothed_speed_data[-1]
+
+# Calculate the rise time (time to go from 10% to 90% of the steady-state value)
+# interp_speed = interp1d(time_step, speedValue)
+# rise_time_indices = np.where((speedValue >= 0.1 * steady_state_value) & (speedValue <= 0.9 * steady_state_value))[0]
+# rise_time = time_step[rise_time_indices[0]] if rise_time_indices.size > 0 else None
+
+time_10 = np.interp(0.1 * steady_state_value, smoothed_speed_data, time_step)
+time_90 = np.interp(0.9 * steady_state_value, smoothed_speed_data, time_step)
+rise_time = time_90 - time_10 if time_10 and time_90 else None
+
+# Calculate overshoot (percentage above the steady-state value)
+overshoot = ((peak_value - steady_state_value) / steady_state_value) * 100 if peak_value and steady_state_value else None
+
+# Calculate settling time (time to remain within 2% of the steady-state value)
+settling_indices = np.where(np.abs(smoothed_speed_data - steady_state_value) <= 0.02 * steady_state_value)[0]
+settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else None
+
+
+#---------------- PLOT DATA MENTAH -------------- #
 plt.figure(figsize=(12, 6))
-# plt.subplot(2,1,1)
-plt.plot(time_step, speedValue, label='Speed Value', color='orange')
+plt.plot(time_step, speedValue,color= 'orange', label='Kecepatan Motor', linewidth=2)
+# plt.plot(time_step, speedValue, label='Speed Value', color='orange')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Speed')
+plt.title('Speed Response with Time Response Characteristics')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+#---------------- PLOT DATA YANG SUDAH DI FILTER --------------------#
+plt.figure(figsize=(12, 6))
+plt.plot(time_step, smoothed_speed_data,color= 'pink', label='Kecepatan Motor FILTER', linewidth=2)
+# plt.plot(time_step, speedValue, label='Speed Value', color='orange')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Speed')
+plt.title('Speed Response with Time Response Characteristics')
+plt.grid(True)
+plt.legend()
+plt.show()
+
+#---------------- PLOT DATA FILTER YANG SUDAH DI OLAH --------------------#
+plt.figure(figsize=(12, 6))
+plt.plot(time_step, smoothed_speed_data, color= 'red',label='Kecepatan Motor diolah', linewidth=2)
 plt.xlabel('Time (seconds)')
 plt.ylabel('Speed')
 plt.title('Speed Response with Time Response Characteristics')
 plt.grid(True)
 plt.legend()
 
-# plt.subplot(2,1,2)
-# plt.plot(time_step, sensroValue, label='Sensor Value', color='blue')
-# plt.xlabel('Time (seconds)')
-# plt.ylabel('Sensor Accelerometer')
-# plt.title('Sensor Response with Time Response Characteristics')
-# plt.legend()
+# Annotate steady state value
+plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
+             xy=(time_step[-1], steady_state_value), 
+             xytext=(time_step[-1]-0.1, steady_state_value + 0.1),
+             arrowprops=dict(facecolor='black', arrowstyle='->'))
 
+# Annotate peak time and peak value
+if peak_time and peak_value:
+    plt.plot(peak_time, peak_value, 'ro', label=f'peak time: {peak_time:.2f}')  # Mark the peak point
+    plt.plot(peak_time, peak_value, 'ro', label=f'peak Value: {peak_value:.2f}')  # Mark the peak point
+    plt.annotate(f'Peak Time: {peak_time:.2f}s\nPeak Value: {peak_value:.2f}', 
+                 xy=(peak_time, peak_value), 
+                 xytext=(peak_time + 0.05, peak_value+ 0.05),
+                 arrowprops=dict(facecolor='black', arrowstyle='->'))
 
+# Annotate rise time
+# if rise_time:
+#     plt.axvline(x=rise_time, color='g', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
+#     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
+#                  xy=(rise_time, 0), 
+#                  xytext=(rise_time + 1, -0.05),
+#                  arrowprops=dict(facecolor='black', arrowstyle='->')
+
+if rise_time:
+    plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
+    plt.annotate(f'Rise Time: {rise_time:.2f}s', 
+                 xy=(rise_time, 0), 
+                 xytext=(rise_time, -0.05),
+                 arrowprops=dict(facecolor='black', arrowstyle='->'))
+
+# Annotate settling time
+if settling_time:
+    plt.axvline(x=settling_time, color='green', linestyle='--', label=f'Settling Time: {settling_time:.2f}s')
+    plt.annotate(f'Settling Time: {settling_time:.2f}s', 
+                 xy=(settling_time, steady_state_value), 
+                 xytext=(settling_time, steady_state_value - 0.1),
+                 arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 plt.grid(True)
 plt.legend()
 plt.show()
+
