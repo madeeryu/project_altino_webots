@@ -12,7 +12,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.191424123620782 -0.1535317457483693 0.9694249883015569 4.648558068057565
-  position -1.302245542627357 9.141621644863994 1.2607791603952028
+  position -1.2632642519470179 12.27415355221552 3.5499154998087383
 }
 TexturedBackground {
   texture "music_hall"
@@ -551,7 +551,7 @@ Altino {
   translation -0.6646345143560264 5.800599774276901 0.01951846058845918
   rotation -0.0002524815781572346 -0.00025105359025700034 -0.9999999366125716 1.57646813735614
   name "vehicle(1)"
-  controller "<none>"
+  controller "Fuzzy_NoPlot"
   controllerArgs [
     ""
   ]
@@ -560,7 +560,7 @@ Altino {
   translation -1.34457 5.81506 0.019513
   rotation -0.0002524815781572346 -0.00025105359025700034 -0.9999999366125716 1.57646813735614
   name "vehicle(4)"
-  controller "Fuzzy_Plot_Filter"
+  controller "Fuzzy_NoPlot"
   controllerArgs [
     ""
   ]

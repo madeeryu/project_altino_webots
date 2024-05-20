@@ -110,10 +110,10 @@ while driver.step() != -1:
     dE_PS = fuzz.trimf(x_dError, [0, 2.5, 5])
     dE_PB = fuzz.trapmf(x_dError, [2.5,5,11,11])
 
-    pwm_lambat = fuzz.gaussmf(x_pwm, 0.3, 0.15)  # Terpusat di 0.3 dengan sigma 0.15
-    pwm_normal = fuzz.gaussmf(x_pwm, 0.9, 0.15)  # Terpusat di 0.9 dengan sigma 0.15
-    pwm_cepat = fuzz.gaussmf(x_pwm, 1.5, 0.15)   # Terpusat di 1.5 dengan sigma 0.15
-
+    pwm_lambat = fuzz.gaussmf(x_pwm, 0.3, 0.15)  
+    pwm_normal = fuzz.gaussmf(x_pwm, 0.9, 0.15)  
+    pwm_cepat = fuzz.gaussmf(x_pwm, 1.5, 0.15)   
+    
     error = error_value 
     deltaError = dError
 
@@ -180,7 +180,8 @@ while driver.step() != -1:
         speed = normal_speed
     elif waktuSimulasi >= 1.001 :
         speed = normal_speed + rpm
-#------------------ SETTING ANGLE ROBOT ----------------#
+
+#------------------ SETTING ANGLE AND SPEED ROBOT ----------------#
     if fLeftVal > fRightVal:
         angle += (fLeftVal - fRightVal) / (300 * sensorMax) 
     elif fRightVal >fLeftVal: 
@@ -212,12 +213,12 @@ while driver.step() != -1:
     # waktuSimulasi = timeS - startTime
     if waktuSimulasi >= 15:
         break
-    print(f"Angle : {angle:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
+    print(f"Error : {error_value:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
     # print(f'{speed:.2f}')
     driver.setCruisingSpeed(speed)
     driver.setSteeringAngle(angle)
 
-#memproses data yang didapatkan untuk dijadikan sumbu Y pada plot
+#------------memproses data yang didapatkan untuk dijadikan sumbu X pada plot---------------#
 
 #mengolah data
 shape_value = np.array(speedValue)
@@ -244,8 +245,8 @@ peak_value = smoothed_speed_data[peaks[0]] if peaks.size > 0 else None
 steady_state_value = smoothed_speed_data[-1]
 
 # Calculate the rise time (time to go from 10% to 90% of the steady-state value)
-time_10 = np.interp(1 * steady_state_value, smoothed_speed_data, time_step)
-time_90 = np.interp(9 * steady_state_value, smoothed_speed_data, time_step)
+time_10 = np.interp(0.1 * steady_state_value, smoothed_speed_data, time_step)
+time_90 = np.interp(0.9 * steady_state_value, smoothed_speed_data, time_step)
 rise_time = time_90 - time_10 if time_10 and time_90 else None
 
 # Calculate overshoot (percentage above the steady-state value)
@@ -310,12 +311,12 @@ if peak_time and peak_value:
 #                  xytext=(rise_time + 1, -0.05),
 #                  arrowprops=dict(facecolor='black', arrowstyle='->')
 
-if rise_time:
-    plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
-    plt.annotate(f'Rise Time: {rise_time:.2f}s', 
-                 xy=(rise_time, steady_state_value), 
-                 xytext=(rise_time, steady_state_value + 0.01),
-                 arrowprops=dict(facecolor='black', arrowstyle='->'))
+# if rise_time:
+#     plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
+#     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
+#                  xy=(rise_time, steady_state_value), 
+#                  xytext=(rise_time, steady_state_value + 0.01),
+#                  arrowprops=dict(facecolor='black', arrowstyle='->'))
 
 # Annotate settling time
 if settling_time:
