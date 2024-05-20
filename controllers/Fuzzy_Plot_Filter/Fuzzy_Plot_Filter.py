@@ -159,7 +159,7 @@ def adjust_steering_and_speed(fLeftVal, fRightVal, sLeftVal, sRightVal, angle, s
     angle = max(min(angle, 0.5), -0.4)
 
     normal_speed += 0.01
-    
+
     return angle, speed, normal_speed
 
 def update_speed_based_on_time(startTime, normal_speed, rpm):
@@ -179,7 +179,7 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     sigma = 5
     smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
 
-    peaks, _ = find_peaks(smoothed_speed_data)
+    peaks, _ = find_peaks(smoothed_speed_data)  
     peak_time = time_step[peaks[0]] if peaks.size > 0 else None
     peak_value = smoothed_speed_data[peaks[0]] if peaks.size > 0 else None
     steady_state_value = smoothed_speed_data[-1]
