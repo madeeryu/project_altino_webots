@@ -260,7 +260,6 @@ def init():
     maxSpeed = 1.8
     normal_speed = 1.01
     setpoint = 0
-    devices = initialize_and_enable_sensors(driver, basicTimeStep)
 
     while driver.step() != -1:  
         acc_value, fLeftVal, fCenterVal, fRightVal, sLeftVal, sRightVal, backVal = get_sensor_values(devices)    
