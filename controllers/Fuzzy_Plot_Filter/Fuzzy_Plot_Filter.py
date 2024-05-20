@@ -43,6 +43,7 @@ def run_fuzzy_logic_control(acc_value, setpoint):
     round_acc_value = [f"{num:.2f}" for num in acc_value]
     roll = float(round_acc_value[0])  # mengambil 1 angle
 
+    # Mengolah Data Error
     error_value = setpoint - roll
     previousE = error_value
     dError = error_value - previousE
@@ -173,7 +174,7 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     data_speed = shape_value.shape[0]
     time_step = np.linspace(0, waktuSimulasi, data_speed)
 
-    sigma = 5 #filter gausian
+    sigma = 3 #filter gausian
     smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
 
     peaks, _ = find_peaks(smoothed_speed_data)  
@@ -192,17 +193,16 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     
     #Plot data kotor
     plt.figure(figsize=(12, 6))
+    plt.subplot(2,1,1)
     plt.plot(time_step, speedValue,color= 'orange', label='Kecepatan Motor', linewidth=2)
     plt.xlabel('Time (seconds)')
     plt.ylabel('Speed')
     plt.title('Speed Response with Time Response Characteristics')
     plt.grid(True)
     plt.legend()
-    plt.show()
 
-    #Plot data yang sudah difilter
-    plt.figure(figsize=(12, 6))
-    plt.plot(time_step, smoothed_speed_data, color='red', label='Kecepatan Motor diolah', linewidth=2)
+    plt.subplot(2,1,2)
+    plt.plot(time_step, smoothed_speed_data, color='blue', label='Kecepatan Motor FILTER', linewidth=2)
     plt.xlabel('Time (seconds)')
     plt.ylabel('Speed')
     plt.title('Speed Response with Time Response Characteristics')
@@ -216,8 +216,6 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     plt.xlabel('Time (seconds)')
     plt.ylabel('Speed')
     plt.title('Speed Response with Time Response Characteristics')
-    plt.grid(True)
-    plt.legend()
 
     # Annotate steady state value
     plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
