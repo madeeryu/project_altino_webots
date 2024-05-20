@@ -21,10 +21,6 @@ def initialize_and_enable_sensors(driver, basicTimeStep):
     devices = {sensor: driver.getDevice(sensor) for sensor in sensors}
     for device in devices.values():
         device.enable(basicTimeStep)
-    devices['keyboard'] = driver.getKeyboard()
-    devices['keyboard'].enable(basicTimeStep)
-    devices['headlights'] = driver.getDevice("headlights")
-    devices['backlights'] = driver.getDevice("backlights")
     return devices
 devices = initialize_and_enable_sensors(driver, basicTimeStep)
 
