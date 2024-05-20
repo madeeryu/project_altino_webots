@@ -168,11 +168,12 @@ def update_speed_based_on_time(startTime, normal_speed, rpm):
     return normal_speed, waktuSimulasi
 
 def plot_and_analyze_data(speedValue, waktuSimulasi):
+    
     shape_value = np.array(speedValue)
     data_speed = shape_value.shape[0]
     time_step = np.linspace(0, waktuSimulasi, data_speed)
 
-    sigma = 5
+    sigma = 5 #filter gausian
     smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
 
     peaks, _ = find_peaks(smoothed_speed_data)  
@@ -189,6 +190,7 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     settling_indices = np.where(np.abs(smoothed_speed_data - steady_state_value) <= 0.02 * steady_state_value)[0]
     settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else None
     
+    #Plot data kotor
     plt.figure(figsize=(12, 6))
     plt.plot(time_step, speedValue,color= 'orange', label='Kecepatan Motor', linewidth=2)
     plt.xlabel('Time (seconds)')
@@ -198,7 +200,7 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     plt.legend()
     plt.show()
 
-    # Plotting
+    #Plot data yang sudah difilter
     plt.figure(figsize=(12, 6))
     plt.plot(time_step, smoothed_speed_data, color='red', label='Kecepatan Motor diolah', linewidth=2)
     plt.xlabel('Time (seconds)')
@@ -208,6 +210,7 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     plt.legend()
     plt.show()
 
+    #Plot data yang sudah difilter dan diolah
     plt.figure(figsize=(12, 6))
     plt.plot(time_step, smoothed_speed_data, color= 'red',label='Kecepatan Motor diolah', linewidth=2)
     plt.xlabel('Time (seconds)')
@@ -284,3 +287,4 @@ def init():
 
 if __name__ == "__main__":
     init()
+
