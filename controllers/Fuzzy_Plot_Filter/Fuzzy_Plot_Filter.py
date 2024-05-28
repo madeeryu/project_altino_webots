@@ -5,12 +5,25 @@ import skfuzzy as fuzz
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 from scipy.ndimage import gaussian_filter1d
+import csv
+import os
 
 sensorMax = 1000
 driver = Driver()
 startTime = time.time()
 basicTimeStep = int(driver.getBasicTimeStep())
 
+csv_file_name = 'data_simulasi.csv'
+if os.path.exists(csv_file_name):
+    os.remove(csv_file_name)
+
+def save_to_csv(data):
+    with open(csv_file_name, mode='a', newline='') as file:
+        writer = csv.writer(file)
+     
+        if file.tell() == 0:
+            writer.writerow(['Time', 'SpeedMotor', 'ErrorValue', 'SensorAccelerometer']) 
+        writer.writerow(data)
 
 def initialize_and_enable_sensors(driver, basicTimeStep):
     sensors = [
@@ -44,7 +57,8 @@ def run_fuzzy_logic_control(acc_value, setpoint):
     roll = float(round_acc_value[0])  # mengambil 1 angle
 
     # Mengolah Data Error
-    error_value = setpoint - roll
+    # error_value = speed - setpoint
+    error_value = roll - setpoint
     previousE = error_value
     dError = error_value - previousE
 
@@ -247,6 +261,11 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
                     xy=(settling_time, steady_state_value), 
                     xytext=(settling_time, steady_state_value),
                     arrowprops=dict(facecolor='black', arrowstyle='->'))
+    # if overshoot:
+    plt.annotate(f'Defuzzifikasi: {overshoot:.2f}%', 
+                 xy=(peak_time, peak_value), 
+                 xytext=(peak_time + 1, peak_value - 0.1),
+                 arrowprops=dict(facecolor='black', arrowstyle='->'))
     plt.grid(True)
     plt.legend()
     plt.show()
@@ -273,11 +292,15 @@ def init():
         driver.setCruisingSpeed(speed)
         driver.setSteeringAngle(angle)
 
+        data = [waktuSimulasi,speed,error_value,roll]  # Tambahkan nilai sensor lain jika diperlukan
+
+        # Simpan data ke dalam file CSV
+        save_to_csv(data)
         #Menyimpan Data Yang Didapatkan
         speedValue.append(speed)
         sensroValue.append(roll)
 
-        if waktuSimulasi >= 15:
+        if waktuSimulasi >= 5:
             break
 
     plot_and_analyze_data(speedValue, waktuSimulasi)

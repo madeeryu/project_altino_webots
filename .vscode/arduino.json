@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:nano",
+    "sketch": "d:\\!kuliah\\Tugas perkuliahan SM 4\\Mikrocontroller\\pertemuan_10\\coba\\coba.ino",
+    "port": "COM6",
+    "configuration": "cpu=atmega328old"
+}
