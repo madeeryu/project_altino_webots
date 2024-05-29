@@ -190,20 +190,6 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
 
     sigma = 3 #filter gausian
     smoothed_speed_data = gaussian_filter1d(speedValue, sigma)
-
-    peaks, _ = find_peaks(smoothed_speed_data)  
-    peak_time = time_step[peaks[0]] if peaks.size > 0 else None
-    peak_value = smoothed_speed_data[peaks[0]] if peaks.size > 0 else None
-    steady_state_value = smoothed_speed_data[-1]
-
-    time_10 = np.interp(0.1 * steady_state_value, smoothed_speed_data, time_step)
-    time_90 = np.interp(0.9 * steady_state_value, smoothed_speed_data, time_step)
-    rise_time = time_90 - time_10 if time_10 and time_90 else None
-
-    overshoot = ((peak_value - steady_state_value) / steady_state_value) * 100 if peak_value and steady_state_value else None
-
-    settling_indices = np.where(np.abs(smoothed_speed_data - steady_state_value) <= 0.02 * steady_state_value)[0]
-    settling_time = time_step[settling_indices[0]] if settling_indices.size > 0 else None
     
     #Plot data kotor
     plt.figure(figsize=(12, 6))
@@ -224,51 +210,6 @@ def plot_and_analyze_data(speedValue, waktuSimulasi):
     plt.legend()
     plt.show()
 
-    #Plot data yang sudah difilter dan diolah
-    plt.figure(figsize=(12, 6))
-    plt.plot(time_step, smoothed_speed_data, color= 'red',label='Kecepatan Motor diolah', linewidth=2)
-    plt.xlabel('Time (seconds)')
-    plt.ylabel('Speed')
-    plt.title('Speed Response with Time Response Characteristics')
-
-    # Annotate steady state value
-    plt.annotate(f'Steady State Value: {steady_state_value:.2f}', 
-                xy=(time_step[-1], steady_state_value), 
-                xytext=(time_step[-1]- 1, steady_state_value + 0.01),
-                arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-    # Annotate peak time and peak value
-    if peak_time and peak_value:
-        plt.plot(peak_time, peak_value, 'ro', label=f'peak time: {peak_time:.2f}')  # Mark the peak point
-        plt.plot(peak_time, peak_value, 'ro', label=f'peak Value: {peak_value:.2f}')  # Mark the peak point
-        plt.annotate(f'Peak Time: {peak_time:.2f}s\nPeak Value: {peak_value:.2f}', 
-                    xy=(peak_time, peak_value), 
-                    xytext=(peak_time + 0.01, peak_value+ 0.01),
-                    arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-    # Annotate rise time
-    # if rise_time:
-    #     plt.axvline(x=rise_time, color='pink', linestyle='--', label=f'Rise Time: {rise_time:.2f}s')
-    #     plt.annotate(f'Rise Time: {rise_time:.2f}s', 
-    #                  xy=(rise_time, steady_state_value), 
-    #                  xytext=(rise_time, steady_state_value + 0.01),
-    #                  arrowprops=dict(facecolor='black', arrowstyle='->'))
-
-    # Annotate settling time
-    if settling_time:
-        plt.axvline(x=settling_time, color='green', linestyle='--', label=f'Settling Time: {settling_time:.2f}s')
-        plt.annotate(f'Settling Time: {settling_time:.2f}s', 
-                    xy=(settling_time, steady_state_value), 
-                    xytext=(settling_time, steady_state_value),
-                    arrowprops=dict(facecolor='black', arrowstyle='->'))
-    # if overshoot:
-    plt.annotate(f'Defuzzifikasi: {overshoot:.2f}%', 
-                 xy=(peak_time, peak_value), 
-                 xytext=(peak_time + 1, peak_value - 0.1),
-                 arrowprops=dict(facecolor='black', arrowstyle='->'))
-    plt.grid(True)
-    plt.legend()
-    plt.show()
 
 def init():
     global startTime, speedValue, sensroValue, angle, speed, normal_speed, maxSpeed, setpoint, devices
@@ -300,7 +241,7 @@ def init():
         speedValue.append(speed)
         sensroValue.append(roll)
 
-        if waktuSimulasi >= 5:
+        if waktuSimulasi >= 3:
             break
 
     plot_and_analyze_data(speedValue, waktuSimulasi)
