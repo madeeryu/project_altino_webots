@@ -8,6 +8,7 @@ from scipy.ndimage import gaussian_filter1d
 import csv
 import os
 
+
 sensorMax = 1000
 driver = Driver()
 startTime = time.time()
@@ -58,7 +59,7 @@ def run_fuzzy_logic_control(acc_value, setpoint):
 
     # Mengolah Data Error
     # error_value = speed - setpoint
-    error_value = roll - setpoint
+    error_value = roll-setpoint
     previousE = error_value
     dError = error_value - previousE
 
@@ -233,15 +234,13 @@ def init():
         driver.setCruisingSpeed(speed)
         driver.setSteeringAngle(angle)
 
-        data = [waktuSimulasi,speed,error_value,roll]  # Tambahkan nilai sensor lain jika diperlukan
-
-        # Simpan data ke dalam file CSV
+        data = [waktuSimulasi,speed,error_value,roll]  
         save_to_csv(data)
         #Menyimpan Data Yang Didapatkan
         speedValue.append(speed)
         sensroValue.append(roll)
 
-        if waktuSimulasi >= 3:
+        if waktuSimulasi >= 2:
             break
 
     plot_and_analyze_data(speedValue, waktuSimulasi)

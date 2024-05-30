@@ -217,7 +217,9 @@ while driver.step() != -1:
     data = [waktuSimulasi,speed,error_value,roll]  # Tambahkan nilai sensor lain jika diperlukan
     save_to_csv(data)
 
-    print(f"Angle : {angle:.2f}     || Throttle : {speed}       ||       Pitch Sensor : {roll:.2f}")
+    # print(f"Angle : {angle:.2f}     || Throttle : {speed}       ||       Pitch Sensor : {roll:.2f}")
+    print(f"Pitch Sensor : {roll:.2f}")
+
 
   
     driver.setCruisingSpeed(speed)
