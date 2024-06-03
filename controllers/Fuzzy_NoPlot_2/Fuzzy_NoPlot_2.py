@@ -3,64 +3,18 @@ import numpy as np
 import time
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+from scipy.ndimage import gaussian_filter1d
 import csv
 import os
+
 
 sensorMax = 1000
 driver = Driver()
 startTime = time.time()
-
 basicTimeStep = int(driver.getBasicTimeStep())
-sensorTimeStep = 4 * basicTimeStep
-front_left_sensor = driver.getDevice('front_left_sensor')
-front_center_sensor = driver.getDevice('front_center_sensor')
-front_right_sensor = driver.getDevice('front_right_sensor')
 
-headlights = driver.getDevice("headlights")
-backlights = driver.getDevice("backlights")
-
-keyboard = driver.getKeyboard()
-keyboard.enable(sensorTimeStep)
-
-front_left_sensor.enable(sensorTimeStep)
-front_center_sensor.enable(sensorTimeStep)
-front_right_sensor.enable(sensorTimeStep)
-
-side_left_sensor = driver.getDevice('side_left_sensor')
-side_right_sensor = driver.getDevice('side_right_sensor')
-back_sensor = driver.getDevice('back_sensor')
-
-side_left_sensor.enable(sensorTimeStep)
-side_right_sensor.enable(sensorTimeStep)
-back_sensor.enable(sensorTimeStep)
-
-acc_sensor =  driver.getDevice('accelerometer')
-acc_sensor.enable(sensorTimeStep)   
-
-# angle refers to the angle (from straight ahead) that the wheels
-# currently have
-angle = 0
-setpoint  = 0
-speed = 0
-# maxSpeed = 1.8
-maxSpeed = 1.8
-minSpeed = 0
-normal_speed = 1
-# ensure 0 starting speed and wheel angle
-driver.setSteeringAngle(angle)
-driver.setCruisingSpeed(speed)
-# defaults for this controller
-useManual = False
-headlightsOn = False
-
-
-previousE = 0
-printCounter = 0
-
-def calculate_maxSpeedAltino(parameters):
-    return (parameters/100)*1.8
-
-csv_file_name = 'coba.csv'
+csv_file_name = 'data_simulasi.csv'
 if os.path.exists(csv_file_name):
     os.remove(csv_file_name)
 
@@ -71,57 +25,71 @@ def save_to_csv(data):
         if file.tell() == 0:
             writer.writerow(['Time', 'SpeedMotor', 'ErrorValue', 'SensorAccelerometer']) 
         writer.writerow(data)
-while driver.step() != -1:
-#-------------DEKLARASI WAKTU--------------------------#     
-    timeS = time.time()
-#-------------DEKLARASI VARIABEL-----------------------# 
-    #sensor accelerometer
-    acc_value = acc_sensor.getValues()
 
-    #censor jarak pada bagian depan mobil
-    fLeftVal = front_left_sensor.getValue()
-    fCenterVal = front_center_sensor.getValue()
-    fRightVal = front_right_sensor.getValue()
-    #sensor jarak pada bagian samping mobil
-    sLeftVal = side_left_sensor.getValue()
-    sRightVal = side_right_sensor.getValue()
-    #sensor jarak pada bagian belakang mobil
-    backVal = back_sensor.getValue()
-    
-#-------------PERHITUNGAN ERROR FUZZY LOGIC---------------#    
+def initialize_and_enable_sensors(driver, basicTimeStep):
+    sensors = [
+        'front_left_sensor', 'front_center_sensor', 'front_right_sensor',
+        'side_left_sensor', 'side_right_sensor', 'back_sensor',
+        'accelerometer'
+    ]
+    devices = {sensor: driver.getDevice(sensor) for sensor in sensors}
+    for device in devices.values():
+        device.enable(basicTimeStep)
+    return devices
+devices = initialize_and_enable_sensors(driver, basicTimeStep)
 
+
+def get_sensor_values(devices):
+    # Mengambil nilai dari semua sensor yang diperlukan menggunakan dictionary
+    acc_value = devices['accelerometer'].getValues()
+    fLeftVal = devices['front_left_sensor'].getValue()
+    fCenterVal = devices['front_center_sensor'].getValue()
+    fRightVal = devices['front_right_sensor'].getValue()
+    sLeftVal = devices['side_left_sensor'].getValue()
+    sRightVal = devices['side_right_sensor'].getValue()
+    backVal = devices['back_sensor'].getValue()
+
+    return acc_value, fLeftVal, fCenterVal, fRightVal, sLeftVal, sRightVal, backVal
+def calculate_maxSpeedAltino(parameters):
+    return (parameters/100)*1.8
+
+def run_fuzzy_logic_control(acc_value, setpoint):
     round_acc_value = [f"{num:.2f}" for num in acc_value]
-    roll = float(round_acc_value[0])#mengambil 1 angle 
+    roll = float(round_acc_value[0])  # mengambil 1 angle
 
-    speed = driver.getTargetCruisingSpeed()
-    error_value =  roll - setpoint
+    # Mengolah Data Error
+    # error_value = speed - setpoint
+    error_value = roll-setpoint
     previousE = error_value
     dError = error_value - previousE
 
-#---------------------FUZZY LOGIC-------------------------#
-    x_error = np.arange(-11,11,0.1)
-    x_dError = np.arange(-11,11,0.1)
-    x_pwm = np.arange(0,1.8,0.1)
+    # Definisi rentang untuk error, deltaError, dan pwm
+    x_error = np.arange(-11, 11, 0.1)
+    x_dError = np.arange(-11, 11, 0.1)
+    x_pwm = np.arange(0, 1.8, 0.01)
 
-    e_NB =fuzz.trapmf(x_error, [-11,-11, -5, -2.5])
-    e_NS =fuzz.trimf(x_error, [-5, -2.5, 0])
-    e_Z =fuzz.trimf(x_error, [-2.5, 0, 2.5])
+    # Definisi fungsi keanggotaan untuk error dan deltaError
+    e_NB = fuzz.trapmf(x_error, [-11, -11, -5, -2.5])
+    e_NS = fuzz.trimf(x_error, [-5, -2.5, 0])
+    e_Z = fuzz.trimf(x_error, [-2.5, 0, 2.5])
     e_PS = fuzz.trimf(x_error, [0, 2.5, 5])
-    e_PB = fuzz.trapmf(x_error, [2.5,5,11,11])
+    e_PB = fuzz.trapmf(x_error, [2.5, 5, 11, 11])
 
-    dE_NB =fuzz.trapmf(x_error, [-11,-11, -5, -2.5])
-    dE_NS =fuzz.trimf(x_error, [-5, -2.5, 0])
-    dE_Z =fuzz.trimf(x_error, [-2.5, 0, 2.5])
-    dE_PS = fuzz.trimf(x_error, [0, 2.5, 5])
-    dE_PB = fuzz.trapmf(x_error, [2.5,5,11,11])
+    dE_NB = fuzz.trapmf(x_dError, [-11, -11, -5, -2.5])
+    dE_NS = fuzz.trimf(x_dError, [-5, -2.5, 0])
+    dE_Z = fuzz.trimf(x_dError, [-2.5, 0, 2.5])
+    dE_PS = fuzz.trimf(x_dError, [0, 2.5, 5])
+    dE_PB = fuzz.trapmf(x_dError, [2.5, 5, 11, 11])
 
-    pwm_lambat =  fuzz.trimf(x_pwm,[0,0.3,0.6])
-    pwm_normal =  fuzz.trimf(x_pwm,[0.6,0.9,1.2])
-    pwm_cepat =  fuzz.trimf(x_pwm,[1.2,1.5,1.8])
+    # Definisi fungsi keanggotaan untuk output PWM
+    pwm_lambat = fuzz.gaussmf(x_pwm, 0.3, 0.15)
+    pwm_normal = fuzz.gaussmf(x_pwm, 0.9, 0.15)
+    pwm_cepat = fuzz.gaussmf(x_pwm, 1.5, 0.15)
 
     error = error_value 
     deltaError = dError
-
+  
+   
     e_lvl_NB = fuzz.interp_membership(x_error, e_NB,error)
     e_lvl_NS = fuzz.interp_membership(x_error, e_NS,error)
     e_lvl_Z = fuzz.interp_membership(x_error, e_Z,error)
@@ -172,54 +140,80 @@ while driver.step() != -1:
     aggregated = np.fmax(hasil_lambat,np.fmax(hasil_normal,hasil_cepat))
     signal = fuzz.defuzz(x_pwm, aggregated, 'centroid')
 
-    if signal == 0:
-       signal = roll
     
+    # Perbaikan bug
+    if signal == 0:
+        signal = roll
+
     pwm = signal * roll / signal
     rpm = calculate_maxSpeedAltino(pwm)
 
-    #kecepatan motor menggunakan fuzzy control
-    waktuSimulasi = timeS - startTime
-    if waktuSimulasi <= 1 :
-        speed = normal_speed
-    elif waktuSimulasi >= 1.001 :
-        speed = normal_speed + rpm
+    return rpm, roll,error_value
 
-            
+def adjust_steering_and_speed(fLeftVal, fRightVal, sLeftVal, sRightVal, angle, speed, normal_speed, maxSpeed):
+    # Mengatur sudut berdasarkan sensor depan
     if fLeftVal > fRightVal:
-        angle += (fLeftVal - fRightVal) / (300 * sensorMax) 
-    elif fRightVal > fLeftVal: 
+        angle += (fLeftVal - fRightVal) / (300 * sensorMax)
+    elif fRightVal > fLeftVal:
         angle -= (fRightVal - fLeftVal) / (300 * sensorMax)
     else:
         angle /= 1.5
 
+    # Mengatur sudut berdasarkan sensor samping
     if sLeftVal > 300:
         angle += 0.003
     if sRightVal > 300:
         angle -= 0.003
-    
-  
 
-    # # clamp speed and angle to max values
-    if speed > maxSpeed:
-        speed = maxSpeed
-    elif speed < -1 * maxSpeed:
-        speed = -1 * maxSpeed
-    if angle > 0.5:
-        angle = 0.5
-    elif angle < -0.4:
-        angle = -0.4
+    # Membatasi kecepatan dan sudut untuk mobil berbelok
+    normal_speed = min(normal_speed, 1)
+    speed = max(speed, -1 * maxSpeed)
+    angle = max(min(angle, 0.5), -0.4)
 
-    # if (printCounter % 10) == 0:
-    # print("Angle: %.2f" % angle)
-    # print("_______HASIL PRINT FUNGSI_____:")
-    
-    data = [waktuSimulasi,speed,error_value,roll]  # Tambahkan nilai sensor lain jika diperlukan
-    save_to_csv(data)
+    normal_speed += 0.01
 
-    print(f"Angle : {angle:.2f}     || Throttle : {speed}       ||       Pitch Sensor : {roll:.2f}")
+    return angle, speed, normal_speed
 
-  
-    driver.setCruisingSpeed(speed)
-    driver.setSteeringAngle(angle)
-    # printCounter += 1
+def update_speed_based_on_time(startTime, normal_speed, rpm):
+    timeS = time.time()
+    waktuSimulasi = timeS - startTime
+    if waktuSimulasi <= 0.1:
+        return normal_speed, waktuSimulasi
+    elif waktuSimulasi >= 0.2:
+        return normal_speed + rpm, waktuSimulasi
+    return normal_speed, waktuSimulasi
+
+
+def init():
+    global startTime, speedValue, sensroValue, angle, speed, normal_speed, maxSpeed, setpoint, devices
+    startTime = time.time()
+    speedValue = []
+    sensroValue = []
+    angle = 0
+    speed = 0
+    maxSpeed = 1.8
+    normal_speed = 1.01
+    setpoint = 0
+
+    while driver.step() != -1:  
+        acc_value, fLeftVal, fCenterVal, fRightVal, sLeftVal, sRightVal, backVal = get_sensor_values(devices)    
+        rpm, roll, error_value = run_fuzzy_logic_control(acc_value, setpoint)    
+        angle, speed, normal_speed = adjust_steering_and_speed(fLeftVal, fRightVal, sLeftVal, sRightVal, angle, speed, normal_speed, maxSpeed)     
+        speed, waktuSimulasi = update_speed_based_on_time(startTime, normal_speed, rpm)
+
+        print(f"Error : {error_value:.2f}     || Throttle : {speed:.3f}       ||     Pitch Sensor : {roll:.2f}")
+
+        driver.setCruisingSpeed(speed)
+        driver.setSteeringAngle(angle)
+
+        data = [waktuSimulasi,speed,error_value,roll]  
+        save_to_csv(data)
+        #Menyimpan Data Yang Didapatkan
+        speedValue.append(speed)
+        sensroValue.append(roll)
+
+
+
+if __name__ == "__main__":
+    init()
+
